@@ -7,6 +7,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private Criteria criteria;
     private boolean GPSABoolean, networkABoolean;
-
+    private int timeAnInt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,31 @@ public class MainActivity extends AppCompatActivity {
         //Setup Location
         setupLocation();
 
+        //Auto Update
+        autoUpdate();
+
     }   // Main Method
+
+    private void autoUpdate() {
+
+        timeAnInt += 1;
+
+        Log.d("Test", "Time ==> " + timeAnInt);
+
+        myLoop();
+
+
+    }   // autoUpdate
+
+    private void myLoop() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                autoUpdate();
+            }
+        }, 1000);   // Mil Second
+    }
 
     @Override
     protected void onResume() {
