@@ -55,15 +55,20 @@ public class MainActivity extends AppCompatActivity {
         String strLat = "Unknow";
         String strLng = "Unknow";
 
-        Location networkLocation = requestLocation(LocationManager.GPS_PROVIDER, "No Internet");
+        Location networkLocation = requestLocation(LocationManager.NETWORK_PROVIDER, "No Internet");
         if (networkLocation != null) {
             strLat = String.format("%.7f", networkLocation.getLatitude());
             strLng = String.format("%.7f", networkLocation.getLongitude());
         }
 
+        Location gpsLocation = requestLocation(LocationManager.GPS_PROVIDER, "No GPS card");
+        if (gpsLocation != null) {
+            strLat = String.format("%.7f", gpsLocation.getLatitude());
+            strLng = String.format("%.7f", gpsLocation.getLongitude());
+        }
 
-
-
+        latTextView.setText(strLat);
+        lngTextView.setText(strLng);
 
     }   // onResume
 
