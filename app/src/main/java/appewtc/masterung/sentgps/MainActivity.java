@@ -7,9 +7,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +46,19 @@ public class MainActivity extends AppCompatActivity {
 
         timeAnInt += 1;
 
-        Log.d("Test", "Time ==> " + timeAnInt);
+
+
+        //Change Policy
+        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy
+                .Builder().permitAll().build();
+        StrictMode.setThreadPolicy(threadPolicy);
+
+        //Get Current Time
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String getTimeDate = dateFormat.format(date);
+
+        Log.d("Test", "Time ==> " + timeAnInt + " = " + getTimeDate);
 
         myLoop();
 
