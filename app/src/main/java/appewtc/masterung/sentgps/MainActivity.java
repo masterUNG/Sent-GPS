@@ -10,7 +10,10 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Explicit
     private TextView latTextView, lngTextView;
+    private EditText plateEditText;
 
     private LocationManager locationManager;
     private Criteria criteria;
@@ -41,6 +45,20 @@ public class MainActivity extends AppCompatActivity {
         autoUpdate();
 
     }   // Main Method
+
+    public void clickSaveData(View view) {
+
+        String strName = plateEditText.getText().toString().trim();
+
+        if (strName.equals("")) {
+            Toast.makeText(this, "กรุณากรอกชื่อ สถานที่ด้วย คะ",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+
+        }
+
+    }   // clickSaveData
+
 
     private void autoUpdate() {
 
@@ -187,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
     private void bindWidget() {
         latTextView = (TextView) findViewById(R.id.textView3);
         lngTextView = (TextView) findViewById(R.id.textView5);
+        plateEditText = (EditText) findViewById(R.id.editText);
     }
 
 }   // Main Class
