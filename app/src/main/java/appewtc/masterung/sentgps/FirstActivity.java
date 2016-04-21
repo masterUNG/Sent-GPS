@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.squareup.okhttp.OkHttpClient;
@@ -96,6 +97,17 @@ public class FirstActivity extends AppCompatActivity {
 
                 PlateAdapter plateAdapter = new PlateAdapter(FirstActivity.this, nameStrings);
                 listView.setAdapter(plateAdapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        Intent intent = new Intent(FirstActivity.this, PlateMapsActivity.class);
+                        startActivity(intent);
+
+                    }   // onItem
+                });
+
 
             } catch (Exception e) {
                 e.printStackTrace();
