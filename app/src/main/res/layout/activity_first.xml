@@ -7,6 +7,34 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="appewtc.masterung.sentgps.FirstActivity">
+    tools:context="appewtc.masterung.sentgps.FirstActivity"
+    android:background="@drawable/bg27">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:id="@+id/textView6"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/text" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Plate"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/text"
+        android:onClick="clickAddPlate" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_below="@+id/textView6"
+        android:layout_above="@+id/button"
+        android:layout_margin="15dp"
+        android:background="#82ffffff" />
 </RelativeLayout>
