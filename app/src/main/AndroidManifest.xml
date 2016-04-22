@@ -35,7 +35,11 @@
 
         <activity
             android:name=".PlateMapsActivity"
-            android:label="@string/title_activity_plate_maps"></activity>
+            android:label="@string/title_activity_plate_maps" />
+        <activity android:name=".HistoryListView" />
+        <activity
+            android:name=".DetailHistory"
+            android:label="@string/title_activity_detail_history"></activity>
     </application>
 
 </manifest>
