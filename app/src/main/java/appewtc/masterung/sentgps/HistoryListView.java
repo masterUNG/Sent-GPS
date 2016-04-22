@@ -3,6 +3,8 @@ package appewtc.masterung.sentgps;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.squareup.okhttp.OkHttpClient;
@@ -10,6 +12,10 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class HistoryListView extends AppCompatActivity {
 
@@ -21,6 +27,9 @@ public class HistoryListView extends AppCompatActivity {
         setContentView(R.layout.activity_history_list_view);
 
         listView = (ListView) findViewById(R.id.listView2);
+
+        ConnectedHistory connectedHistory = new ConnectedHistory();
+        connectedHistory.execute();
 
     }   // Main Method
 
@@ -50,9 +59,41 @@ public class HistoryListView extends AppCompatActivity {
             try {
 
                 JSONArray jsonArray = new JSONArray(s);
+
+                String[] allTimeStrings = new String[jsonArray.length()];
+                String[] allDateStrings = new String[jsonArray.length()];
+
+                ArrayList<String> stringArrayList = new ArrayList<String>();
+
                 for (int i=0;i<jsonArray.length();i++) {
 
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    allTimeStrings[i] = jsonObject.getString("Date");
+                    String[] resultStrings = allTimeStrings[i].split(" ");
+                    allDateStrings[i] = resultStrings[0];
+
+                    stringArrayList.add(allDateStrings[i]);
+
+                    Log.d("24April", "Date (" + i + ") = " + allDateStrings[i]);
+
                 }   // for
+
+                Objects[] objects = (Objects[]) stringArrayList.toArray();
+                for (Objects objects1 : objects) {
+
+                    if (stringArrayList.indexOf(objects1) != stringArrayList.lastIndexOf(objects1)) {
+
+                        stringArrayList.remove(stringArrayList.lastIndexOf(objects1));
+
+                    }   // if
+
+                } //for
+
+                ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(HistoryListView.this,
+                        android.R.layout.simple_list_item_1, stringArrayList);
+                listView.setAdapter(stringArrayAdapter);
+
+
 
             } catch (Exception e) {
                 e.printStackTrace();
