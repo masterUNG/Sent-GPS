@@ -3,6 +3,7 @@ package appewtc.masterung.sentgps;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ public class FirstActivity extends AppCompatActivity {
 
     //Explicit
     private ListView listView;
+    private String[] latStrings, lngStrings;
 
 
     @Override
@@ -32,7 +34,86 @@ public class FirstActivity extends AppCompatActivity {
         //Synchronize JSON
         synJSON();
 
+        //Loop Check User
+        loopCheckUser();
+
     }   // Main Method
+
+    public class ConnectedLocalUser extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request.Builder builder = new Request.Builder();
+                Request request = builder.url("http://swiftcodingthai.com/watch/php_get_last.php").build();
+                Response response = okHttpClient.newCall(request).execute();
+                return response.body().string();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }   // doInBack
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("22April", "JSON ==> " + s);
+
+            try {
+
+                JSONArray jsonArray = new JSONArray(s);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                String strLat = jsonObject.getString("Lat");
+                String strLng = jsonObject.getString("Lng");
+
+                for (int i=0;i<latStrings.length;i++) {
+
+                    checkDistance(latStrings[i], lngStrings[i], strLat, strLng);
+
+                }   // for
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }   // onPost
+
+    }   // Connected Class
+
+    private void checkDistance(String latString,
+                               String lngString,
+                               String strLat,
+                               String strLng) {
+
+        Log.i("22April", "Lat Plate ==> " + latString);
+        Log.i("22April", "Lng Plate ==> " + lngString);
+        Log.w("22April", "Lat User ==> " + strLat);
+        Log.w("22April", "Lng User ==> " + strLng);
+
+    }   // checkDistance
+
+
+    private void loopCheckUser() {
+
+        ConnectedLocalUser connectedLocalUser = new ConnectedLocalUser();
+        connectedLocalUser.execute();
+
+        //Delay
+        Handler handler = new Handler();
+        int intTime = 5000; // หน่วงเป็นเวลา 5 วินาที
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loopCheckUser();
+            }
+        }, intTime);
+
+    }   // loopCheckUser
 
     @Override
     protected void onRestart() {
@@ -77,8 +158,8 @@ public class FirstActivity extends AppCompatActivity {
                 JSONArray jsonArray = new JSONArray(s);
 
                 final String[] nameStrings = new String[jsonArray.length()];
-                final String[] latStrings = new String[jsonArray.length()];
-                final String[] lngStrings = new String[jsonArray.length()];
+                latStrings = new String[jsonArray.length()];
+                lngStrings = new String[jsonArray.length()];
 
                 for (int i=0;i<jsonArray.length();i++) {
 
