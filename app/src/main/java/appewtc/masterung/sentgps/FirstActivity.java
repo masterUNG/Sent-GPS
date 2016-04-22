@@ -39,6 +39,27 @@ public class FirstActivity extends AppCompatActivity {
 
     }   // Main Method
 
+
+    //นี่คือ เมทอด ที่หาระยะ ระหว่างจุด
+    private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515 * 1.609344;
+
+
+        return (dist);
+    }
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+
     public class ConnectedLocalUser extends AsyncTask<Void, Void, String> {
 
         @Override
@@ -72,7 +93,15 @@ public class FirstActivity extends AppCompatActivity {
 
                 for (int i=0;i<latStrings.length;i++) {
 
-                    checkDistance(latStrings[i], lngStrings[i], strLat, strLng);
+                    double douLatPlate = Double.parseDouble(latStrings[i]);
+                    double douLngPlate = Double.parseDouble(lngStrings[i]);
+                    double douLatUser = Double.parseDouble(strLat);
+                    double douLngUser = Double.parseDouble(strLng);
+
+                    double currentDistance = distance(douLatPlate,
+                            douLngPlate, douLatUser, douLngUser);
+
+                    Log.d("23April", "current Dis ==> " + currentDistance);
 
                 }   // for
 
@@ -85,17 +114,7 @@ public class FirstActivity extends AppCompatActivity {
 
     }   // Connected Class
 
-    private void checkDistance(String latString,
-                               String lngString,
-                               String strLat,
-                               String strLng) {
 
-        Log.i("22April", "Lat Plate ==> " + latString);
-        Log.i("22April", "Lng Plate ==> " + lngString);
-        Log.w("22April", "Lat User ==> " + strLat);
-        Log.w("22April", "Lng User ==> " + strLng);
-
-    }   // checkDistance
 
 
     private void loopCheckUser() {
