@@ -9,7 +9,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class PlateMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -55,6 +57,11 @@ public class PlateMapsActivity extends FragmentActivity implements OnMapReadyCal
         LatLng latLng = new LatLng(douLat, douLng);
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+        mMap.addMarker(new MarkerOptions()
+        .position(latLng)
+        .icon(BitmapDescriptorFactory.fromResource(R.drawable.build4))
+        .title(nameString));
+
 
     }   // onMap
 
