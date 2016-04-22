@@ -22,7 +22,6 @@ public class FirstActivity extends AppCompatActivity {
     private ListView listView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +76,9 @@ public class FirstActivity extends AppCompatActivity {
 
                 JSONArray jsonArray = new JSONArray(s);
 
-                String[] nameStrings = new String[jsonArray.length()];
-                String[] latStrings = new String[jsonArray.length()];
-                String[] lngStrings = new String[jsonArray.length()];
+                final String[] nameStrings = new String[jsonArray.length()];
+                final String[] latStrings = new String[jsonArray.length()];
+                final String[] lngStrings = new String[jsonArray.length()];
 
                 for (int i=0;i<jsonArray.length();i++) {
 
@@ -103,6 +102,11 @@ public class FirstActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                         Intent intent = new Intent(FirstActivity.this, PlateMapsActivity.class);
+
+                        intent.putExtra("Name", nameStrings[i]);
+                        intent.putExtra("Lat", latStrings[i]);
+                        intent.putExtra("Lng", lngStrings[i]);
+
                         startActivity(intent);
 
                     }   // onItem
