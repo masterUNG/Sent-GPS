@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -102,6 +103,9 @@ public class FirstActivity extends AppCompatActivity {
                             douLngPlate, douLatUser, douLngUser);
 
                     Log.d("23April", "current Dis ==> " + currentDistance);
+                    if (currentDistance<0.3) {
+                        myNotification();
+                    }
 
                 }   // for
 
@@ -114,7 +118,11 @@ public class FirstActivity extends AppCompatActivity {
 
     }   // Connected Class
 
+    private void myNotification() {
 
+        Toast.makeText(this, "เข้าในพื้นที่แล้ว", Toast.LENGTH_SHORT).show();
+
+    }   // myNotification
 
 
     private void loopCheckUser() {
