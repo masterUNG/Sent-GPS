@@ -1,5 +1,6 @@
 package appewtc.masterung.sentgps;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -44,7 +45,7 @@ public class PlateMapsActivity extends FragmentActivity implements OnMapReadyCal
     }
 
     public void clickHistory(View view) {
-
+        startActivity(new Intent(PlateMapsActivity.this, HistoryListView.class));
     }
 
     @Override
